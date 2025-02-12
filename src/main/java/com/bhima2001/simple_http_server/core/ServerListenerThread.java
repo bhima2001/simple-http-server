@@ -1,12 +1,14 @@
 package com.bhima2001.simple_http_server.core;
 
+import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.io.IOException;
-import java.io.OutputStream;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.bhima2001.simple_http_server.core.Http.HttpParser;
+import com.bhima2001.simple_http_server.core.Http.HttpRequest;
+import com.bhima2001.simple_http_server.core.Http.ResponseHandler.HttpResponse;
 
 public class ServerListenerThread implements Runnable {
     private ServerSocket serverSocket;
@@ -14,7 +16,7 @@ public class ServerListenerThread implements Runnable {
     private String webRoot;
     private static final Logger LOGGER = LogManager.getLogger(ServerListenerThread.class);
 
-    public ServerListenerThread(int port, String webRoot) throws IOException {
+    public ServerListenerThread(int port, String webRoot) throws Exception {
         this.port = port;
         this.webRoot = webRoot;
         this.serverSocket = new ServerSocket(this.port);
@@ -23,16 +25,20 @@ public class ServerListenerThread implements Runnable {
     @Override
     public void run() {
         try {
-            while(serverSocket.isBound() && !serverSocket.isClosed()) {
+            while (serverSocket.isBound() && !serverSocket.isClosed()) {
                 Socket socket = serverSocket.accept();
-                ResponseThread response = new ResponseThread(socket);
-                response.start();
+                WorkerThread workerThread = new WorkerThread(socket);
+                Thread thread = new Thread(workerThread);
+                thread.start();
             }
-            //serverSocket.close();
         } catch (Exception e) {
-            System.out.println(e);
+            try {
+                serverSocket.close();
+            } catch (Exception e1) {
+                LOGGER.error("Unable to close server socket because of: " + e1.getMessage());
+            }
+            LOGGER.error(e.getMessage());
         }
     }
 
 }
-
