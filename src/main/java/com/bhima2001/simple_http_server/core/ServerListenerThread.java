@@ -1,14 +1,9 @@
 package com.bhima2001.simple_http_server.core;
 
-import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import com.bhima2001.simple_http_server.core.Http.HttpParser;
-import com.bhima2001.simple_http_server.core.Http.HttpRequest;
-import com.bhima2001.simple_http_server.core.Http.ResponseHandler.HttpResponse;
 
 public class ServerListenerThread implements Runnable {
     private ServerSocket serverSocket;
