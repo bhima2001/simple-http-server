@@ -19,7 +19,7 @@ public class SimpleHttpServerApplication {
             port = Integer.parseInt(args[0]);
         if (args.length > 1)
             webRoot = args[1];
-        Configuration configure = new Configuration(Integer.parseInt(args[0]), args[1]);
+        Configuration configure = new Configuration(port, webRoot);
         try {
             ServerListenerThread serverListernerThread = new ServerListenerThread(configure.getPort(),
                     configure.getWebroot());

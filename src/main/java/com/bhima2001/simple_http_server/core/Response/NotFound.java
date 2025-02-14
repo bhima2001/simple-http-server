@@ -4,4 +4,8 @@ public class NotFound implements ResponseDispatcher {
     public String dispatchHandler() {
         return "The page is not found.";
     }
+
+    public int getLength() {
+        return dispatchHandler().length();
+    }
 }

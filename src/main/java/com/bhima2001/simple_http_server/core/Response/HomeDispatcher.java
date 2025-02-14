@@ -4,4 +4,8 @@ public class HomeDispatcher implements ResponseDispatcher {
     public String dispatchHandler() {
         return "This is home page,";
     }
+
+    public int getLength() {
+        return dispatchHandler().length();
+    }
 }

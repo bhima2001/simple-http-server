@@ -4,4 +4,8 @@ public class GalleryDispatcher implements ResponseDispatcher {
     public String dispatchHandler() {
         return "This is Gallery page.";
     }
+
+    public int getLength() {
+        return dispatchHandler().length();
+    }
 }

@@ -39,6 +39,7 @@ public class HttpResponse extends HttpMessage {
             this.source = "Not Found";
             this.responseDispatcher = new NotFound();
         }
+        this.setHeaders("content-length", Integer.toString(this.responseDispatcher.getLength()));
         this.setBody(this.responseDispatcher.dispatchHandler());
     }
 
